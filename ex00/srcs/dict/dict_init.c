@@ -13,14 +13,12 @@ char **create_strarr(void)
 	return (res);
 }
 
-t_dict *init_dict(void)
+t_dict init_dict(void)
 {
-	t_dict *dict;
-	dict = (t_dict *)malloc(sizeof(t_dict));
-	if (!dict)
-		return (NULL);
-	dict->keys = create_strarr();
-	dict->vals = create_strarr();
-	dict->size = 0;
+	t_dict dict;
+
+	dict.keys = create_strarr();
+	dict.vals = create_strarr();
+	dict.size = 0;
 	return (dict);
 }

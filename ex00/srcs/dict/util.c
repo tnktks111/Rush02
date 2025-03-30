@@ -1,7 +1,7 @@
 #include "rush02.h"
 //indexハンドラーと抽出
 
-// recieve strings and return the offset of the head of numeric char
+// 次の数字までインデックスを進める
 int skip_to_numeric(char *str)
 {
 	int i;
@@ -10,7 +10,8 @@ int skip_to_numeric(char *str)
 		i++;
 	return (i);
 }
-// recieve strings and return the offset of the head of the word
+
+// 次のwordまでインデックスを進める
 int skip_to_word(char *str)
 {
 	int i;
@@ -23,11 +24,13 @@ int skip_to_word(char *str)
 		i++;
 	return (i);
 }
+
+//次の行までインデックスを進める
 int skip_to_next_entry(char *str)
 {
 	int i;
 	i = 0;
-	if (str[i] == '\n')
+	while (str[i] == '\n')
 		i++;
 	return (i);
 }
@@ -36,16 +39,14 @@ int skip_to_next_entry(char *str)
 int dict_get_num(char *dest, char *str)
 {
 	int i;
-	char c[100];
 
 	i = 0;
 	while(str[i] >= '0' && str[i] <= '9')
 	{
-		c[i] = str[i];
+		dest[i] = str[i];
 		i++;
 	}
-	c[i] = '\0';
-	ft_strcpy(dest, c);
+	dest[i] = '\0';
 	return (i);
 }
 
@@ -53,14 +54,13 @@ int dict_get_num(char *dest, char *str)
 int dict_get_word(char *dest, char *str)
 {
 	int i;
-	char c[100];
 
 	i = 0;
-	while((str[i] >= 'a' && str[i] <= 'z') || (str[i] >= 'A' && str[i] <= 'Z')){
-		c[i] = str[i];
+	while (str[i] >= 32 && str[i] < 127)
+	{
+		dest[i] = str[i];
 		i++;
 	}
-	c[i] = '\0';
-	ft_strcpy(dest, c);
+	dest[i] = '\0';
 	return (i);
 }
