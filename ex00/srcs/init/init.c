@@ -10,6 +10,11 @@ int init(char *dict_path, char *input)
 	str = file_read(dict_path);
 	if (!str)
 		return (dict_error());
+
+	t_dict_max dict_max = find_dict_max(str);
+	if (dict_max.words_count == -1)
+		return (dict_error());
+
 	dict = init_dict();
 	// TODO ↓のようなmallocエラーの処理入れる
 	// if (!dict)
