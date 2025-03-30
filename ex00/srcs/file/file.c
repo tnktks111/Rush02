@@ -45,6 +45,8 @@ char *file_read(char *file)
 		return (NULL);
 	}
 	buffer = (char *)malloc(f_size + 1);
+	if (!buffer)
+		return NULL;
 	rd = read(fd, buffer, f_size);
 	if (rd == -1)
 	{

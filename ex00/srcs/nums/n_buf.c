@@ -1,8 +1,9 @@
 #include "rush02.h"
+
 //新しいbufferを作る
-t_n_buf *n_buf_init(void)
+t_n_buf	*n_buf_init(void)
 {
-	t_n_buf *buffer;
+	t_n_buf	*buffer;
 
 	buffer = (t_n_buf *)malloc(sizeof(t_n_buf));
 	buffer->words = (char **)malloc(sizeof(char *));
@@ -11,12 +12,15 @@ t_n_buf *n_buf_init(void)
 	return (buffer);
 }
 
-//bufferにwordをぶち込む、mallocで再確保するか、クソデカbufferを作るか、それともt_n_bufの実装をlinkedlistでやりなおすか
-void n_buf_add(t_n_buf *buffer, char *word){
-	char **words;
-	int i;
+// bufferにwordをぶち込む、mallocで再確保するか、クソデカbufferを作るか、それともt_n_bufの実装をlinkedlistでやりなおすか
+int	n_buf_add(t_n_buf *buffer, char *word)
+{
+	char	**words;
+	int		i;
 
 	words = (char **)malloc(sizeof(char *) * (buffer->size + 1));
+	if (!words)
+		return (NULL);
 	i = 0;
 	while (i < buffer->size)
 	{
@@ -27,12 +31,14 @@ void n_buf_add(t_n_buf *buffer, char *word){
 	free(buffer->words);
 	buffer->words = words;
 	buffer->size += 1;
+	return (1);
 }
 
 //バッファが完成したら出力
-void n_buf_print(t_n_buf *buffer)
+void	n_buf_print(t_n_buf *buffer)
 {
-	int i;
+	int	i;
+
 	i = 0;
 	while (i < buffer->size)
 	{
@@ -44,8 +50,8 @@ void n_buf_print(t_n_buf *buffer)
 	ft_putchar('\n');
 }
 
-//free
-void free_n_buf(t_n_buf *buffer)
+// free
+void	free_n_buf(t_n_buf *buffer)
 {
 	int i;
 	i = 0;

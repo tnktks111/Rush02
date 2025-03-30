@@ -2,12 +2,15 @@
 //dictからstrに対するvalを検索、あればbufにぶち込む
 int n_store(t_n_buf *buffer, t_dict *dict, char *str)
 {
+	if (*str == NULL)
+		return NULL;
 	char *word;
 	word = dict_get(dict, str);
 	if (!word)
 		return (-1);
-	n_buf_add(buffer, word);
-	return (0);
+	if (!n_buf_add(buffer, word))
+		return NULL;
+	return (1);
 }
 
 //2桁の数を処理
