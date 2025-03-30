@@ -5,7 +5,7 @@ int validate_key(char *str)
   int i = 0;
   while (str[i] == ' ')
     i++;
-  if (str[i] == '-' || str[i] == '+')
+  while (str[i] == '-' || str[i] == '+')
     i++;
   while (str[i] != ':')
   {
@@ -13,7 +13,8 @@ int validate_key(char *str)
       return (-1);
     i++;
   }
-
+  while (str[i] == ' ')
+    i++;
   return (i);
 }
 
@@ -46,17 +47,12 @@ t_dict_max find_dict_max(char *str)
   dict_max.words_count = 0;
   while (str[i])
   {
-    if (str[i] == '\n')
-    {
-      i++;
+    if (str[i++] == '\n')
       continue;
-    }
     dict_max.words_count++;
     if ((j = validate_key(&str[i])) == -1)
       return (invalid_dict_max());
     i += j;
-    while (str[i] == ' ')
-      i++;
     if (str[i++] != ':') // ++ skips ':'
       return (invalid_dict_max());
     while (str[i] == ' ')
@@ -96,8 +92,8 @@ t_dict_max find_dict_max(char *str)
 //   printf("%s\n",str3);
 //   printf("words_count = %d\n", dict_max3.words_count);
 //   printf("max_value_len = %d\n", dict_max3.max_value_len);
- 
-//   printf("----10,11の間が改行入ってないから☓-------\n");
+
+//   printf("----◯、10,11の間が改行入ってないが、:以降はすべての表示文字が入れられるので、:も対象と考えられる-------\n");
 //   char str4[] = "\n\n4:four\n\n\n\n  10: ten  11: eleven\n\n\n";
 //   t_dict_max dict_max4 = find_dict_max(str4);
 //   printf("%s\n",str4);
@@ -112,7 +108,7 @@ t_dict_max find_dict_max(char *str)
 //   printf("max_value_len = %d\n", dict_max5.max_value_len);
 
 //   printf("------◯-----\n");
-//   char str6[] = "7: seven\n8: eight\n42: forty    two ";
+//   char str6[] = "  ++-7: seven\n8: eight\n42: forty    two ";
 //   t_dict_max dict_max6 = find_dict_max(str6);
 //   printf("%s\n",str6);
 //   printf("words_count = %d\n", dict_max6.words_count);
