@@ -8,7 +8,12 @@ int init(char *dict_path, char *input)
 	int		num_check;
 
 	str = file_read(dict_path);
+	if (!str)
+		return (dict_error());
 	dict = init_dict();
+	// TODO ↓のようなmallocエラーの処理入れる
+	// if (!dict)
+	//   return (dict_error());
 	parser_check = parser(&dict, str);
 	if (parser_check == -1)
 		return (dict_error());

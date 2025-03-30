@@ -6,6 +6,8 @@ char *zero_padding(char c, int size)
 	int i;
 	
 	str = (char *)malloc(sizeof(char) * (size + 2));
+	if (!str)
+		return NULL;
 	str[0] = c;
 	i = 1;
 	while(i < size + 1)
@@ -26,6 +28,8 @@ char *get_sub(char *str, int left, int right)
 	i = 0;
 	len = right - left + 1;
 	sub = (char *)malloc(sizeof(char) * (len + 1));
+	if (!sub)
+		return NULL;
 	while (i < len)
 	{
 		sub[i] =str[left + i];
