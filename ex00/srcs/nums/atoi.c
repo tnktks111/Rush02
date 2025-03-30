@@ -1,3 +1,5 @@
+#include "rush02.h"
+
 char	*ft_atoi(char *str)
 {
 	while (*str && *str == ' ')
