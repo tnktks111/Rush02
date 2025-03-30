@@ -56,7 +56,7 @@ int n_hundreds(t_n_buf *buffer, t_dict *dict, char *str)
 	if (len == 1)
 		return (n_store(buffer, dict, str));
 	if (len == 2)
-		return (n_store(buffer, dict, get_sub(str, 0, 1)));
+		return (n_tens(buffer, dict, str));
 	if (n_store(buffer, dict, get_sub(str, 0, 0)) == -1)
 		return (-1);
 	if (n_store(buffer, dict, "100") == -1)
