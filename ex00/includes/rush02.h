@@ -45,6 +45,7 @@ char *file_read(char *file);
 int init(char *dict_path, char *input);
 //nums
 t_n_buf *n_buf_init(void);
+char *ft_atoi(char *str);
 int n_buf_add(t_n_buf *buffer, char *word);
 void n_buf_print(t_n_buf *buffer);
 void free_n_buf(t_n_buf *buffer);
