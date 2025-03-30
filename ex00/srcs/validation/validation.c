@@ -15,7 +15,6 @@ int ft_is_numeric(char *str)
 int is_valid_dictfile(char *dict)
 {
 	int fd;
-	int rc;
 	char buf[BUF_SIZE];
 	int byte_num;
 	
