@@ -20,7 +20,7 @@ int	n_buf_add(t_n_buf *buffer, char *word)
 
 	words = (char **)malloc(sizeof(char *) * (buffer->size + 1));
 	if (!words)
-		return (NULL);
+		return (0);
 	i = 0;
 	while (i < buffer->size)
 	{
