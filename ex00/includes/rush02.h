@@ -14,6 +14,12 @@ typedef struct s_n_buf
 	int size;
 } t_n_buf;
 
+typedef struct s_dict_max
+{
+	int words_count;
+	int max_word_len;
+} t_dict_max;
+
 #define DICT_PATH "dicts/numbers.dict"
 #define BUF_SIZE 4096
 #include <unistd.h> //read, write, close
@@ -26,6 +32,7 @@ typedef struct s_n_buf
 //dict
 char **create_strarr(void);
 t_dict init_dict(void);
+t_dict_max find_dict_max(char *str);
 void free_dict(t_dict *dict);
 void items_setter(t_dict *dict, char *key, char *val);
 int parser(t_dict *dict, char *raw);
