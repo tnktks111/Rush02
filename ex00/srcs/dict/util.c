@@ -6,7 +6,7 @@ int skip_to_numeric(char *str)
 {
 	int i;
 	i = 0;
-	while(str[i] && (str[i] < '0' || str[i] > '9'))
+	while(str[i] && (str[i] != '+' || str[i] != '-' || (str[i] < '0' || str[i] > '9')))
 		i++;
 	return (i);
 }
@@ -41,6 +41,13 @@ int dict_get_num(char *dest, char *str)
 	int i;
 
 	i = 0;
+	if (*str == '+' || *str == '-')
+	{
+		if (*str == '+')
+			str++;
+		else
+			dest[i++] = '-';
+	}
 	while(str[i] >= '0' && str[i] <= '9')
 	{
 		dest[i] = str[i];
