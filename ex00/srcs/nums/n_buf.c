@@ -52,10 +52,6 @@ void	n_buf_print(t_n_buf *buffer)
 // free
 void	free_n_buf(t_n_buf *buffer)
 {
-	int i;
-
-	i = 0;
-	while (i < buffer->size)
-		free(buffer->words[i++]);
+	free(buffer->words);
 	free(buffer);
 }

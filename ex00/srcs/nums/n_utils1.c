@@ -10,12 +10,15 @@ int n_store(t_n_buf *buffer, t_dict *dict, char *str)
 		return (-1);
 	if (!n_buf_add(buffer, word))
 		return (-1);
+	
 	return (0);
 }
 
 int n_tens(t_n_buf *buffer, t_dict *dict, char *str)
 {
 	int len;
+
+	char *pad;
 	len = 2;
 	while (*str == '0')
 	{
@@ -25,16 +28,18 @@ int n_tens(t_n_buf *buffer, t_dict *dict, char *str)
 	if (len == 0)
 		return (0);
 	if (len == 1)
-		return (n_store(buffer, dict, get_sub(str, 0, 0)));
+		return (n_store(buffer, dict, str));
 	if (str[0] == '1')
 		return (n_store(buffer, dict, str));
-	if (n_store(buffer, dict, zero_padding(str[0], 1)) == -1)
+	pad = zero_padding(str[0], 1);
+	if (n_store(buffer, dict, pad) == -1)
 		return (-1);
+	free(pad);
 	if (str[1] != '0')
 	{
 		if (!n_buf_add(buffer, "-"))
 			return (-1);
-		return (n_store(buffer, dict, get_sub(str, 1, 1)));
+		return (n_store(buffer, dict, &str[1]));
 	}
 	return (0);
 }
@@ -42,6 +47,7 @@ int n_tens(t_n_buf *buffer, t_dict *dict, char *str)
 int n_hundreds(t_n_buf *buffer, t_dict *dict, char *str)
 {
 	int len;
+	char *sub;
 
 	len = ft_strlen(str);
 	if (len == 1 && str[0] == '0')
@@ -57,15 +63,19 @@ int n_hundreds(t_n_buf *buffer, t_dict *dict, char *str)
 		return (n_store(buffer, dict, str));
 	if (len == 2)
 		return (n_tens(buffer, dict, str));
-	if (n_store(buffer, dict, get_sub(str, 0, 0)) == -1)
+	sub = get_sub(str, 0, 0);
+	if (n_store(buffer, dict, sub) == -1)
 		return (-1);
 	if (n_store(buffer, dict, "100") == -1)
 		return (-1);
 	if (str[1] != '0' || str[2] != '0')
 		if (!n_buf_add(buffer, "and"))
 			return (-1);
-	if (n_tens(buffer, dict, get_sub(str, 1, 2)) == -1)
+	free(sub);
+	sub = get_sub(str, 1, 2);
+	if (n_tens(buffer, dict, sub) == -1)
 		return (-1);
+	free(sub);
 	return (0);
 }
 
@@ -75,6 +85,7 @@ int n_convert(t_n_buf *buffer, t_dict *dict, char *str)
 	int n;
 	int remain;
 	char *digits;
+	char *pad;
 
 	i = 0;
 	remain = ft_strlen(str);
@@ -87,9 +98,12 @@ int n_convert(t_n_buf *buffer, t_dict *dict, char *str)
 			return -1;
 		if (remain - n >= 3 && !(digits[0] == '0' && digits[1] == '0' && digits[2] == '0'))
 		{
-			if (n_store(buffer, dict, zero_padding('1', remain - n)) == -1 || n_buf_add(buffer, ",") == -1)
+			pad = zero_padding('1', remain - n);
+			if (n_store(buffer, dict, pad) == -1 || n_buf_add(buffer, ",") == -1)
 				return (-1);
+			free(pad);
 		}
+		free(digits);
 		i += n;
 		remain -= n;
 	}

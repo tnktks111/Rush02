@@ -22,5 +22,7 @@ int init(char *dict_path, char *input)
 	if (num_check == -1)
 		return (dict_error());
 	n_buf_print(buffer);
+	free_n_buf(buffer);
+	free_dict(&dict);
 	return (0);
 }

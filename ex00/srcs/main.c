@@ -2,6 +2,7 @@
 int main(int argc, char *argv[])
 {
 	int i;
+
 	i = is_valid_input(argc, argv, DICT_PATH);
 	if (i == 0)
 		return (error());

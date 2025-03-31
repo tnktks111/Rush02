@@ -10,6 +10,7 @@ int parser(t_dict *dict, char *str){
 		word = (char *)malloc(sizeof(char) * 100);
 		if (!num || !word)
 			return (-1);
+		i += skip_to_numeric(str + i);
 		i += dict_get_num(num, str + i);
 		i += skip_to_word(str + i);
 		i += dict_get_word(word, str + i);
