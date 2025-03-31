@@ -1,13 +1,13 @@
 #include "rush02.h"
-int parser(t_dict *dict, char *str){
+int parser(t_dict *dict, char *str, t_dict_max dict_max){
 	int i;
 	char *num;
 	char *word;
 
 	i = 0;
 	while (str[i]){
-		num = (char *)malloc(sizeof(char) * 100);
-		word = (char *)malloc(sizeof(char) * 100);
+		num = (char *)malloc(sizeof(char) * (dict_max.max_word_len + 1));
+		word = (char *)malloc(sizeof(char) * (dict_max.max_word_len + 1));
 		if (!num || !word)
 			return (-1);
 		i += skip_to_numeric(str + i);

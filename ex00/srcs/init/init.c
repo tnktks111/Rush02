@@ -5,28 +5,36 @@ int init(char *dict_path, char *input)
 	t_n_buf	*buffer;
 	t_dict_max dict_max;
 	char	*str;
-	int		parser_check;
-	int		num_check;
+	int		check;
 
 	str = file_read(dict_path);
 	if (!str)
 		return (dict_error());
-
 	dict_max = find_dict_max(str);
 	if (dict_max.words_count == -1)
 		return (dict_error());
-
 	dict = init_dict(dict_max);
-	// TODO ↓のようなmallocエラーの処理入れる
-	// if (!dict)
-	//   return (dict_error());
-	parser_check = parser(&dict, str);
-	if (parser_check == -1)
+	if (dict.index == -1)
 		return (dict_error());
+	check = parser(&dict, str, dict_max);
+	if (check == -1)
+	{
+		free_dict(&dict);
+		return (dict_error());
+	}
 	buffer = n_buf_init();
-	num_check = n_convert(buffer, &dict, input);
-	if (num_check == -1)
+	if (!buffer)
+	{
+		free_dict(&dict);
 		return (dict_error());
+	}
+	check = n_convert(buffer, &dict, input);
+	if (check == -1)
+	{
+		free_n_buf(buffer);
+		free_dict(&dict);
+		return (dict_error());
+	}
 	n_buf_print(buffer);
 	free_n_buf(buffer);
 	free_dict(&dict);

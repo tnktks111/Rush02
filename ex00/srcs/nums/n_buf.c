@@ -5,7 +5,14 @@ t_n_buf	*n_buf_init(void)
 	t_n_buf	*buffer;
 
 	buffer = (t_n_buf *)malloc(sizeof(t_n_buf));
+	if (!buffer)
+		return (NULL);
 	buffer->words = (char **)malloc(sizeof(char *));
+	if (!buffer->words)
+	{
+		free(buffer);
+		return (NULL);
+	}
 	buffer->words[0] = 0;
 	buffer->size = 0;
 	return (buffer);
@@ -49,7 +56,6 @@ void	n_buf_print(t_n_buf *buffer)
 	ft_putchar('\n');
 }
 
-// free
 void	free_n_buf(t_n_buf *buffer)
 {
 	free(buffer->words);

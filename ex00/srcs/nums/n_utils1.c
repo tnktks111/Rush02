@@ -95,12 +95,18 @@ int n_convert(t_n_buf *buffer, t_dict *dict, char *str)
 			n = 3;
 		digits = get_sub(str, i, i + n - 1);
 		if (n_hundreds(buffer, dict, digits) == -1)
-			return -1;
+		{
+			free(digits);
+			return (0);
+		}
 		if (remain - n >= 3 && !(digits[0] == '0' && digits[1] == '0' && digits[2] == '0'))
 		{
 			pad = zero_padding('1', remain - n);
 			if (n_store(buffer, dict, pad) == -1 || n_buf_add(buffer, ",") == -1)
-				return (-1);
+			{
+				free(pad);
+				return(-1);
+			}
 			free(pad);
 		}
 		free(digits);

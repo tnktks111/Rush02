@@ -36,7 +36,7 @@ t_dict init_dict(t_dict_max dict_max);
 t_dict_max find_dict_max(char *str);
 void free_dict(t_dict *dict);
 void items_setter(t_dict *dict, char *key, char *val);
-int parser(t_dict *dict, char *raw);
+int parser(t_dict *dict, char *raw, t_dict_max dict_max);
 char *dict_get(t_dict *dict, char *key);
 int skip_to_numeric(char *str);
 int skip_to_word(char *str);
