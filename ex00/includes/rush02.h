@@ -17,7 +17,7 @@ typedef struct s_n_buf
 typedef struct s_dict_max
 {
 	int words_count;
-	int max_value_len;
+	int max_word_len;
 } t_dict_max;
 
 #define DICT_PATH "dicts/numbers.dict"
