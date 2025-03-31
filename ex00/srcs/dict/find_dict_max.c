@@ -43,7 +43,6 @@ t_dict_max invalid_dict_max(void)
   return dict_max;
 }
 
-char str6[] = "42: two\n";
 void calc_dict_max(char *str, t_dict_max *dict_max)
 {
   int i;
