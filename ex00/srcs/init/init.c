@@ -3,6 +3,7 @@ int init(char *dict_path, char *input)
 {
 	t_dict	dict;
 	t_n_buf	*buffer;
+	t_dict_max dict_max;
 	char	*str;
 	int		parser_check;
 	int		num_check;
@@ -11,11 +12,11 @@ int init(char *dict_path, char *input)
 	if (!str)
 		return (dict_error());
 
-	t_dict_max dict_max = find_dict_max(str);
+	dict_max = find_dict_max(str);
 	if (dict_max.words_count == -1)
 		return (dict_error());
 
-	dict = init_dict();
+	dict = init_dict(dict_max);
 	// TODO ↓のようなmallocエラーの処理入れる
 	// if (!dict)
 	//   return (dict_error());

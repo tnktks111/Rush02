@@ -5,6 +5,7 @@ typedef struct s_dict
 {
 	char **keys;
 	char **vals;
+	int index;
 	int size;
 } t_dict;
 
@@ -30,8 +31,8 @@ typedef struct s_dict_max
 #include <stdio.h> 
 
 //dict
-char **create_strarr(void);
-t_dict init_dict(void);
+char **create_strarr(int arr_len, int word_cap);
+t_dict init_dict(t_dict_max dict_max);
 t_dict_max find_dict_max(char *str);
 void free_dict(t_dict *dict);
 void items_setter(t_dict *dict, char *key, char *val);
