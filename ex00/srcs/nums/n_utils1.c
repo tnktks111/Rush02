@@ -1,5 +1,5 @@
 #include "rush02.h"
-//dictからstrに対するvalを検索、あればbufにぶち込む
+
 int n_store(t_n_buf *buffer, t_dict *dict, char *str)
 {
 	if (str == NULL)
@@ -13,8 +13,6 @@ int n_store(t_n_buf *buffer, t_dict *dict, char *str)
 	return (0);
 }
 
-//2桁の数を処理
-//上から順に00, 0*, 1*, 下2つでメイン処理
 int n_tens(t_n_buf *buffer, t_dict *dict, char *str)
 {
 	int len;
@@ -33,12 +31,14 @@ int n_tens(t_n_buf *buffer, t_dict *dict, char *str)
 	if (n_store(buffer, dict, zero_padding(str[0], 1)) == -1)
 		return (-1);
 	if (str[1] != '0')
+	{
+		if (!n_buf_add(buffer, "-"))
+			return (-1);
 		return (n_store(buffer, dict, get_sub(str, 1, 1)));
+	}
 	return (0);
 }
 
-//3桁の数を処理
-//上から順に、000, 00*, 0**, 下3つが***の処理
 int n_hundreds(t_n_buf *buffer, t_dict *dict, char *str)
 {
 	int len;
@@ -61,6 +61,9 @@ int n_hundreds(t_n_buf *buffer, t_dict *dict, char *str)
 		return (-1);
 	if (n_store(buffer, dict, "100") == -1)
 		return (-1);
+	if (str[1] != '0' || str[2] != '0')
+		if (!n_buf_add(buffer, "and"))
+			return (-1);
 	if (n_tens(buffer, dict, get_sub(str, 1, 2)) == -1)
 		return (-1);
 	return (0);
@@ -83,8 +86,10 @@ int n_convert(t_n_buf *buffer, t_dict *dict, char *str)
 		if (n_hundreds(buffer, dict, digits) == -1)
 			return -1;
 		if (remain - n >= 3 && !(digits[0] == '0' && digits[1] == '0' && digits[2] == '0'))
-			if (n_store(buffer, dict, zero_padding('1', remain - n)) == -1)
+		{
+			if (n_store(buffer, dict, zero_padding('1', remain - n)) == -1 || n_buf_add(buffer, ",") == -1)
 				return (-1);
+		}
 		i += n;
 		remain -= n;
 	}
